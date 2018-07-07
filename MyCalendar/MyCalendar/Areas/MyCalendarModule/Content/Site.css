@@ -1,0 +1,136 @@
+﻿@font-face {
+    font-family: 'IRANSans';
+    src: url('../fonts/IRANSansWeb.eot?#') format('eot'), url('../fonts/IRANSansWeb.woff') format('woff'), url('../fonts/IRANSansWeb.ttf') format('truetype');
+}
+
+
+@font-face {
+    font-family: 'IRANSansBlack';
+    src: url('../fonts/IRANSansWeb_Black.eot?#') format('eot'), url('../fonts/IRANSansWeb_Black.woff') format('woff'), url('../fonts/IRANSansWeb_Black.ttf') format('truetype');
+}
+
+html {
+    padding: 10px;
+    height: 100%;
+}
+
+body {
+    font-family: IRANSans;
+    height: 100%;
+    background: #E0E0E0;
+}
+
+.body-content {
+    height: 100%;
+    flex-direction: column;
+    background: #fff;
+    padding: 0px;
+}
+
+.calendar-toolbar {
+    width: 100%;
+    background: #0D47A1;
+    color: #fff;
+}
+
+    .calendar-toolbar ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+
+.rtl .calendar-toolbar li {
+    float: right;
+}
+
+.calendar-toolbar li {
+    float: right;
+}
+
+    .calendar-toolbar li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    .calendar-toolbar li span {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 0px;
+        text-decoration: none;
+    }
+    .calendar-toolbar li select {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 13px 8px;
+        text-decoration: none;
+        background: #0D47A1;
+        border:none;
+    }
+    .calendar-toolbar li input {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 8px;
+        text-decoration: none;
+        background: #0D47A1;
+        border: none;
+    }
+        /* Change the link color to #111 (black) on hover */
+    .calendar-toolbar li a:hover {
+        background-color: #1565C0;
+    }
+
+
+.calendar-table {
+    flex: 1;
+    width: 100%;
+}
+
+.calendar-table-row {
+    flex: 1;
+    width: 100%;
+}
+
+.day-view {
+    text-align: center;
+    flex: 1;
+    overflow: hidden;
+    border: 1px solid #EEEEEE;
+}
+
+    .day-view .date {
+        padding:2px;
+        text-align: center;
+    }
+.calendar-table .today .date {
+    background: #FFC107;
+    color: #fff;
+}
+
+
+.calendar-table .holiday {
+    background-color: #f44336;
+    color:#fff;
+}
+.day-view .events {
+    text-align: right;
+}
+
+.day-view-deactive {
+    background: #EEEEEE;
+    color: #BDBDBD;
+}
+
+.week-day-view {
+    text-align: center;
+    flex: 1;
+    overflow: hidden;
+    border-bottom: 1px solid #EEEEEE;
+    padding: 5px;
+}
