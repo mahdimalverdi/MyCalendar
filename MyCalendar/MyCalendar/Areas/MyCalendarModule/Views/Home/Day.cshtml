@@ -1,25 +1,42 @@
-﻿
+﻿@model List<MyCalendarModule.Models.Event>
+
 @{
     Layout = null;
 }
 
+@{
+    System.Globalization.PersianCalendar persianCalendar = new System.Globalization.PersianCalendar();
+    System.Globalization.HijriCalendar hijriCalendar = new System.Globalization.HijriCalendar();
+}
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="@(((int)ViewBag.Year).ToString()+((int)ViewBag.Month<10?"0":"")+((int)ViewBag.Month).ToString()+((int)ViewBag.Day<10?"0":"")+((int)ViewBag.Day).ToString())" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
+                <h5 class="modal-title">@Resource.Events</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <p>Modal body text goes here.</p>
-                @(((int)ViewBag.Year).ToString() + ((int)ViewBag.Month < 10 ? "0" : "") + ((int)ViewBag.Month).ToString() + ((int)ViewBag.Day < 10 ? "0" : "") + ((int)ViewBag.Day).ToString())" 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save changes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <div class="modal-body day-view">
+
+                    <div class="date">
+                        @ViewBag.Day @ViewBag.MonthName @ViewBag.Year
+                    </div>
+                    <div class="events">
+                        @foreach (var item in Model.Where(e => e.Time.Date == new DateTime(ViewBag.Year, ViewBag.Month, ViewBag.Day, persianCalendar)))
+                        {
+                            <p class="event-view bg-@item.Color text-light">@item.Title</p>
+                        }
+                    </div>
+                <button type="button" class="btn btn-success mt-2" data-toggle="modal" data-target="#AddEvent@(((int)ViewBag.Year).ToString()+((int)ViewBag.Month<10?"0":"")+((int)ViewBag.Month).ToString()+((int)ViewBag.Day<10?"0":"")+((int)ViewBag.Day).ToString())"><i class="fas fa-plus-circle fa-2x"></i></button>
             </div>
         </div>
     </div>
 </div>
+
+@Html.Action("AddEvent", new
+{
+    year =ViewBag.Year,
+    month = ViewBag.Month,
+    day = ViewBag.Day
+})

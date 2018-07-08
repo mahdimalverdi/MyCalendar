@@ -369,4 +369,13 @@
   <data name="Yes" xml:space="preserve">
     <value>بلی</value>
   </data>
+  <data name="Color" xml:space="preserve">
+    <value>رنگ</value>
+  </data>
+  <data name="Events" xml:space="preserve">
+    <value>رویداد ها</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>زمان</value>
+  </data>
 </root>

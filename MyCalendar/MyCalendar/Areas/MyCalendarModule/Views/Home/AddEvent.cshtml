@@ -1,0 +1,75 @@
+﻿@model MyCalendarModule.Models.Event
+
+@{
+    Layout = null;
+}
+@{
+    System.Globalization.PersianCalendar persianCalendar = new System.Globalization.PersianCalendar();
+    System.Globalization.HijriCalendar hijriCalendar = new System.Globalization.HijriCalendar();
+}
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="AddEvent@(((int)ViewBag.Year).ToString()+((int)ViewBag.Month<10?"0":"")+((int)ViewBag.Month).ToString()+((int)ViewBag.Day<10?"0":"")+((int)ViewBag.Day).ToString())" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@Resource.Events</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body day-view">
+
+
+ @using (Ajax.BeginForm("AddEvent",
+            new AjaxOptions
+            {
+                HttpMethod = "POST",
+                OnSuccess = "refresh",
+
+            }))
+            {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Time, htmlAttributes: new { @class = "control-label col-md-2" })
+                            
+                                @Html.TextBox("Time", (new DateTime((int)ViewBag.Year, (int)ViewBag.Month, (int)ViewBag.Day,persianCalendar).Year.ToString() + "/" + ((int)new DateTime((int)ViewBag.Year, (int)ViewBag.Month, (int)ViewBag.Day, persianCalendar).Month < 10 ? "0" : "") + ((int)new DateTime((int)ViewBag.Year, (int)ViewBag.Month, (int)ViewBag.Day, persianCalendar).Month).ToString() + "/" + ((int)new DateTime((int)ViewBag.Year, (int)ViewBag.Month, (int)ViewBag.Day, persianCalendar).Day < 10 ? "0" : "") + ((int)new DateTime((int)ViewBag.Year, (int)ViewBag.Month, (int)ViewBag.Day, persianCalendar).Day).ToString()), new { @class = "form-control datepicker" ,type="text"})
+                                @Html.ValidationMessageFor(model => model.Time, "", new { @class = "text-danger"})
+
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Color, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <br />
+                            @Html.RadioButtonFor(model => model.Color, "primary",new { @checked = "checked" })<span class="text-primary"> <i class="fas fa-square"></i></span>
+                            @Html.RadioButtonFor(model => model.Color, "secondary")<span class="text-secondary"> <i class="fas fa-square"></i></span>
+                            @Html.RadioButtonFor(model => model.Color, "success")<span class="text-success"> <i class="fas fa-square"></i></span>
+                            @Html.RadioButtonFor(model => model.Color, "danger")<span class="text-danger"> <i class="fas fa-square"></i></span>
+                            @Html.RadioButtonFor(model => model.Color, "info")<span class="text-info"> <i class="fas fa-square"></i></span>
+                            @Html.RadioButtonFor(model => model.Color, "dark")<span class="text-dark"> <i class="fas fa-square"></i></span>
+                                @Html.ValidationMessageFor(model => model.Color, "", new { @class = "text-danger" })
+
+                        </div>
+
+                        <div class="form-group">
+                            <div class="">
+                                <input type="submit" value="@Resource.Create" class="btn btn-success" />
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

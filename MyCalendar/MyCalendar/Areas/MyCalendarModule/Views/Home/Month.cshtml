@@ -1,4 +1,5 @@
-﻿
+﻿@model List<MyCalendarModule.Models.Event>
+
 @{
     ViewBag.Title = "Month";
     Layout = "_Layout.cshtml";
@@ -11,7 +12,7 @@
 <nav class="calendar-toolbar">
     <ul class="d-flex justify-content-center align-content-stretch">
         <li>
-            <a href="/MyCalendar/Month/">@Resource.Today</a>
+            <a href="/MyCalendar/Month/">@Resource.Today </a>
         </li>
         <li>
             <a href="/MyCalendar/Month/@persianCalendar.GetYear(new DateTime(ViewBag.Year, ViewBag.Month,15, persianCalendar).AddMonths(1))/@persianCalendar.GetMonth(new DateTime(ViewBag.Year, ViewBag.Month, 15, persianCalendar).AddMonths(1)) ">@Resource.NextSymbol</a>
@@ -78,6 +79,10 @@
                             @persianCalendar.GetDayOfMonth(new DateTime(ViewBag.Year, ViewBag.Month, 1, persianCalendar).AddDays(i * 7 - firstDayOfMonthInWeek + j))
                         </div>
                         <div class="events">
+                            @foreach (var item in Model.Where(e => e.Time.Date == new DateTime(ViewBag.Year, ViewBag.Month, 1, persianCalendar).AddDays(i * 7 - firstDayOfMonthInWeek + j)))
+                            {
+                                <p class="event-view bg-@item.Color text-light">@item.Title</p>
+                            }
                         </div>
                     </div>
                 }
@@ -89,6 +94,10 @@
                             @persianCalendar.GetDayOfMonth(new DateTime(ViewBag.Year, ViewBag.Month, 1, persianCalendar).AddDays(i * 7 - firstDayOfMonthInWeek + j))
                         </div>
                         <div class="events">
+                            @foreach (var item in Model.Where(e => e.Time.Date == new DateTime(ViewBag.Year, ViewBag.Month, 1, persianCalendar).AddDays(i * 7 - firstDayOfMonthInWeek + j)))
+                            {
+                                <p class="event-view bg-@item.Color text-light">@item.Title</p>
+                            }
                         </div>
                     </a>
                 }
@@ -99,6 +108,10 @@
                             @persianCalendar.GetDayOfMonth(new DateTime(ViewBag.Year, ViewBag.Month, 1, persianCalendar).AddDays(i * 7 - firstDayOfMonthInWeek + j))
                         </div>
                         <div class="events">
+                            @foreach (var item in Model.Where(e => e.Time.Date == new DateTime(ViewBag.Year, ViewBag.Month, 1, persianCalendar).AddDays(i * 7 - firstDayOfMonthInWeek + j)))
+                            {
+                                <p class="event-view bg-@item.Color text-light">@item.Title</p>
+                            }
                         </div>
                     </a>
                 }
@@ -109,6 +122,10 @@
                             @persianCalendar.GetDayOfMonth(new DateTime(ViewBag.Year, ViewBag.Month, 1, persianCalendar).AddDays(i * 7 - firstDayOfMonthInWeek + j))
                         </div>
                         <div class="events">
+                            @foreach (var item in Model.Where(e => e.Time.Date == new DateTime(ViewBag.Year, ViewBag.Month, 1, persianCalendar).AddDays(i * 7 - firstDayOfMonthInWeek + j)))
+                            {
+                                <p class="event-view bg-@item.Color text-light">@item.Title</p>
+                            }
                         </div>
                     </a>
                 }
@@ -120,6 +137,10 @@
                             @persianCalendar.GetDayOfMonth(new DateTime(ViewBag.Year, ViewBag.Month, 1, persianCalendar).AddDays(i * 7 - firstDayOfMonthInWeek + j))
                         </div>
                         <div class="events">
+                            @foreach (var item in Model.Where(e => e.Time.Date == new DateTime(ViewBag.Year, ViewBag.Month, 1, persianCalendar).AddDays(i * 7 - firstDayOfMonthInWeek + j)))
+                            {
+                                <p class="event-view bg-@item.Color text-light">@item.Title</p>
+                            }
                         </div>
                     </a>
                 }
@@ -127,14 +148,15 @@
             </div>
     }
     </div>
-@for (int j = 0; j < persianCalendar.GetDayOfMonth(new DateTime(ViewBag.Year, ViewBag.Month,15, persianCalendar).AddDays(0 - firstDayOfMonthInWeek + j)); j++)
+@for (int j = 0; j < persianCalendar.GetDaysInMonth(ViewBag.Year,ViewBag.Month); j++)
 {
     @Html.Action("Day", new
 {
-    year = persianCalendar.GetYear(new DateTime(ViewBag.Year, ViewBag.Month, 1, persianCalendar).AddDays(0 - firstDayOfMonthInWeek + j)),
-    month = persianCalendar.GetMonth(new DateTime(ViewBag.Year, ViewBag.Month, 1, persianCalendar).AddDays(0 - firstDayOfMonthInWeek + j)),
-    day = persianCalendar.GetDayOfMonth(new DateTime(ViewBag.Year, ViewBag.Month, 1, persianCalendar).AddDays(0 - firstDayOfMonthInWeek + j))
+    year = persianCalendar.GetYear(new DateTime(ViewBag.Year, ViewBag.Month, 1, persianCalendar).AddDays( j)),
+    month = persianCalendar.GetMonth(new DateTime(ViewBag.Year, ViewBag.Month, 1, persianCalendar).AddDays(j)),
+    day = persianCalendar.GetDayOfMonth(new DateTime(ViewBag.Year, ViewBag.Month, 1, persianCalendar).AddDays( j))
 })
+
 }
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
@@ -151,6 +173,19 @@
         $('#Year').on('change', function () {
             var year = $("#Year").val();
             window.location.replace("/MyCalendar/Month/" + year + "/@ViewBag.Month" );
-        });
+            });
+            $('.datepicker').persianDatepicker({
+                observer: true,
+                format: 'YYYY/MM/DD',
+                altField: '.observer-example-alt',
+                toolbox: {
+                    calendarSwitch: {
+                        enabled: false
+                    }
+                },
+            });
+            function refresh() {
+                location.reload();
+            }
         </script>
     }

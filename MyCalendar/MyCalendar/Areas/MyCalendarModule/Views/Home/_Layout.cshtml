@@ -142,7 +142,7 @@
         .calendar-table .holiday {
             background-color: #f44336;
             color: #fff;
-            border-color: #f44336;
+            border-color: #b71c1c;
         }
 
         .day-view .events {
@@ -161,6 +161,13 @@
             border-bottom: 1px solid #EEEEEE;
             padding: 5px;
         }
+
+        .event-view {
+            margin: 2px 2px;
+            padding: 1px;
+            white-space: nowrap;
+            font-size:12px;
+        }
     </style>
 </head>
 <body class="rtl">
@@ -169,7 +176,8 @@
     </div>
 
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/bundles/persian-datepicker")
     @RenderSection("scripts", required: false)
 </body>
 </html>

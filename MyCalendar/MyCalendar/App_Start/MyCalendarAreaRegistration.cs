@@ -35,6 +35,13 @@ namespace MyCalendar
                 new { controller = "Home", action = "Day", year = "", month = "", day = "" },
                 new string[] { "MyCalendarModule.Controllers" }
             );
+
+            context.MapRoute(
+                "AddEvent",
+                "MyCalendar/AddEvent/",
+                new { controller = "Home", action = "AddEvent" },
+                new string[] { "MyCalendarModule.Controllers" }
+            );
         }
     }
 }

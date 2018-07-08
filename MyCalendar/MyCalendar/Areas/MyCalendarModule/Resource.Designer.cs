@@ -133,6 +133,15 @@ namespace MyCalendarModule {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Color.
+        /// </summary>
+        public static string Color {
+            get {
+                return ResourceManager.GetString("Color", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirm password.
         /// </summary>
         public static string ConfirmPassword {
@@ -336,6 +345,15 @@ namespace MyCalendarModule {
         public static string Esfand {
             get {
                 return ResourceManager.GetString("Esfand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Events.
+        /// </summary>
+        public static string Events {
+            get {
+                return ResourceManager.GetString("Events", resourceCulture);
             }
         }
         
@@ -696,6 +714,15 @@ namespace MyCalendarModule {
         public static string ThursdayAbbreviation {
             get {
                 return ResourceManager.GetString("ThursdayAbbreviation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time.
+        /// </summary>
+        public static string Time {
+            get {
+                return ResourceManager.GetString("Time", resourceCulture);
             }
         }
         
