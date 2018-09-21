@@ -235,6 +235,7 @@
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Views\Home\_Layout.cshtml" />
     <Content Include="Views\Home\AddEvent.cshtml" />
+    <Content Include="Views\Home\Search.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -372,4 +372,16 @@
   <data name="Time" xml:space="preserve">
     <value>Time</value>
   </data>
+  <data name="DisplayView" xml:space="preserve">
+    <value>Display View</value>
+  </data>
+  <data name="Monthly" xml:space="preserve">
+    <value>Monthly</value>
+  </data>
+  <data name="Weekly" xml:space="preserve">
+    <value>Weekly</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
 </root>

@@ -134,5 +134,14 @@ namespace MyCalendarModule.Controllers
             }
             return View();
         }
+
+        [HttpGet]
+        public ActionResult Search(string title)
+        {
+            using (var ctx = new Context())
+            {
+                return View(ctx.Events.Where(e => e.Title.Contains(title)).ToList());
+            }
+        }
     }
 }

@@ -214,6 +214,15 @@ namespace MyCalendarModule {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Display View.
+        /// </summary>
+        public static string DisplayView {
+            get {
+                return ResourceManager.GetString("DisplayView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string Edit {
@@ -511,6 +520,15 @@ namespace MyCalendarModule {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Monthly.
+        /// </summary>
+        public static string Monthly {
+            get {
+                return ResourceManager.GetString("Monthly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mordad.
         /// </summary>
         public static string Mordad {
@@ -651,6 +669,15 @@ namespace MyCalendarModule {
         public static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string Search {
+            get {
+                return ResourceManager.GetString("Search", resourceCulture);
             }
         }
         
@@ -813,6 +840,15 @@ namespace MyCalendarModule {
         public static string WednesdayAbbreviation {
             get {
                 return ResourceManager.GetString("WednesdayAbbreviation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weekly.
+        /// </summary>
+        public static string Weekly {
+            get {
+                return ResourceManager.GetString("Weekly", resourceCulture);
             }
         }
         

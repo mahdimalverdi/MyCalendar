@@ -1,0 +1,19 @@
+﻿@model List<MyCalendarModule.Models.Event>
+
+@{
+    Layout = null;
+}
+
+@foreach (var item in Model)
+{
+
+    <div href="#" class="day-view today" >
+        <div class="date">
+            @item.Time.ToString("yyyy/MM/dd")
+        </div>
+        <div class="events">
+            <p class="event-view bg-@item.Color text-light">@item.Title</p>
+        </div>
+    </div>
+}
+

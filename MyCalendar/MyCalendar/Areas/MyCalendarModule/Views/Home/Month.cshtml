@@ -29,10 +29,10 @@
             <input type="number" id="Year" min="1300" max="1999">
         </li>
         <li class="">
-            <a class="" href="#"><i class="fas fa-file-pdf"></i></a>
+            <a href="#" class="" onclick="printFunc()"><i class="fas fa-file-pdf"></i></a>
         </li>
         <li class="">
-            <a class="" href="#"><i class="fas fa-file-excel"></i></a>
+            <a id="btn-export-exel" class="" href="#"><i class="fas fa-file-excel"></i></a>
         </li>
     </ul>
 </nav>
@@ -145,22 +145,87 @@
                     </a>
                 }
             }
-            </div>
+        </div>
     }
-    </div>
-@for (int j = 0; j < persianCalendar.GetDaysInMonth(ViewBag.Year,ViewBag.Month); j++)
+</div>
+
+<table id="export-table" class="d-none">
+    <thead >
+        <tr>
+            <td colspan="7">
+                @ViewBag.Year @ViewBag.MonthName
+            </td>
+        </tr>
+        <tr class="">
+            <th class="week-day-view">
+                @Resource.Saturday
+            </th>
+            <th class="week-day-view">
+                @Resource.Sunday
+            </th>
+            <th class="week-day-view">
+                @Resource.Monday
+            </th>
+            <th class="week-day-view">
+                @Resource.Tuesday
+            </th>
+            <th class="week-day-view">
+                @Resource.Wednesday
+            </th>
+            <th class="week-day-view">
+                @Resource.Thursday
+            </th>
+            <th class="week-day-view">
+                @Resource.Friday
+            </th>
+        </tr>
+    </thead>
+    <tbody class=" ">
+        @for (int i = 0; i < Math.Ceiling((persianCalendar.GetDaysInMonth(ViewBag.Year, ViewBag.Month) + firstDayOfMonthInWeek + 1) / 7.0); i++)
+        {
+
+            <tr class=" ">
+                @for (int j = 0; j < 7; j++)
+                {
+                    <td>
+                        @persianCalendar.GetDayOfMonth(new DateTime(ViewBag.Year, ViewBag.Month, 1, persianCalendar).AddDays(i * 7 - firstDayOfMonthInWeek + j))
+                    </td>
+                }
+            </tr>
+                bool flag = true;
+            
+                for (int k = 0; flag; k++)
+                {
+                    flag = false;
+                    <tr>
+                        @for (int j = 0; j < 7; j++)
+                        {
+                            <td>
+                                @if (Model.Where(e => e.Time.Date == new DateTime(ViewBag.Year, ViewBag.Month, 1, persianCalendar).AddDays(i * 7 - firstDayOfMonthInWeek + j)).Count() > k)
+                                {
+                                    flag = true;
+                                    <span>@Model.Where(e => e.Time.Date == new DateTime(ViewBag.Year, ViewBag.Month, 1, persianCalendar).AddDays(i * 7 - firstDayOfMonthInWeek + j)).ElementAt(k).Title</span>
+                                }
+                            </td>
+                        }
+                    </tr>
+                }
+                }
+    </tbody>
+</table>
+@for (int j = 0; j < persianCalendar.GetDaysInMonth(ViewBag.Year, ViewBag.Month); j++)
 {
     @Html.Action("Day", new
 {
-    year = persianCalendar.GetYear(new DateTime(ViewBag.Year, ViewBag.Month, 1, persianCalendar).AddDays( j)),
+    year = persianCalendar.GetYear(new DateTime(ViewBag.Year, ViewBag.Month, 1, persianCalendar).AddDays(j)),
     month = persianCalendar.GetMonth(new DateTime(ViewBag.Year, ViewBag.Month, 1, persianCalendar).AddDays(j)),
-    day = persianCalendar.GetDayOfMonth(new DateTime(ViewBag.Year, ViewBag.Month, 1, persianCalendar).AddDays( j))
+    day = persianCalendar.GetDayOfMonth(new DateTime(ViewBag.Year, ViewBag.Month, 1, persianCalendar).AddDays(j))
 })
 
 }
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-        <script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
         $(document).ready(function () {
 
             $("#month").val("@((int)ViewBag.Month)");
@@ -187,5 +252,8 @@
             function refresh() {
                 location.reload();
             }
-        </script>
-    }
+            function printFunc() {
+                window.print();
+            }
+    </script>
+}

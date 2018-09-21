@@ -3,20 +3,25 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - @Resource.MyCalendar</title>
+    <title>@Resource.MyCalendar</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
+    <link href="https://tableexport.v3.travismclarke.com/dist/css/tableexport.min.css" rel="stylesheet">
     <style>
-        @@font-face {
-            font-family: 'IRANSans';
-            src: url('../fonts/IRANSansWeb.eot?#') format('eot'), url('../fonts/IRANSansWeb.woff') format('woff'), url('../fonts/IRANSansWeb.ttf') format('truetype');
-        }
 
+        @@media print{
+            body{
+                background:#fff !important;
+            }
+            .body-content {
+                margin-top: 0px !important;
+            }
 
-        @@font-face {
-            font-family: 'IRANSansBlack';
-            src: url('../fonts/IRANSansWeb_Black.eot?#') format('eot'), url('../fonts/IRANSansWeb_Black.woff') format('woff'), url('../fonts/IRANSansWeb_Black.ttf') format('truetype');
-        }
+            .calendar-toolbar li a {
+                display: none !important;
+            }
+            }
 
         html {
             padding: 10px;
@@ -24,14 +29,15 @@
         }
 
         body {
-            font-family: IRANSans;
             height: 100%;
             background: #E0E0E0;
         }
 
         .body-content {
+            margin-top: 62px;
             height: 100%;
             flex-direction: column;
+            flex:1;
             background: #fff;
             padding: 0px;
         }
@@ -170,14 +176,93 @@
         }
     </style>
 </head>
-<body class="rtl">
+<body class="rtl d-flex align-items-start flex-column bd-highlight s">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <a class="navbar-brand" href="#">@Resource.MyCalendar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @Resource.DisplayView
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/MyCalendar/Month/">@Resource.Monthly</a>
+                        <a class="dropdown-item" href="/MyCalendar/Week/">@Resource.Weekly</a>
+                    </div>
+                </li>
+            </ul>
+            
+@using (Ajax.BeginForm("Search",new { }, new AjaxOptions()
+{
+    HttpMethod = "Get",
+    OnBegin = "searchBegin()",
+    Url= "/MyCalendar/Search",
+    UpdateTargetId = "eventTable"
+    
+},new { @class="form-inline my-2 my-lg-0"}))
+{
+                <input class="form-control mr-sm-2" name="title" id="title" type="search" placeholder="@Resource.Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">@Resource.Search</button>
+
+            }
+        </div>
+    </nav>
     <div class="container-fluid body-content d-flex align-items-start flex-column bd-highlight ">
         @RenderBody()
+    </div>
+
+    <div class="modal" id="searchModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@Resource.Search</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="eventTable">
+
+                </div>
+            </div>
+        </div>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/bootstrap")
         @Scripts.Render("~/bundles/persian-datepicker")
+
+    <script type="text/javascript" src="https://tableexport.v3.travismclarke.com/bower_components/js-xlsx/dist/xlsx.core.min.js"></script>
+    <script type="text/javascript" src="https://tableexport.v3.travismclarke.com/bower_components/blobjs/Blob.min.js"></script>
+    <script type="text/javascript" src="https://tableexport.v3.travismclarke.com/bower_components/file-saverjs/FileSaver.min.js"></script>
+    <script type="text/javascript" src="https://tableexport.v3.travismclarke.com/dist/js/tableexport.min.js"></script>
+    <script>
+        var ExportButtons = document.getElementById('export-table');
+
+        var instance = new TableExport(ExportButtons, {
+            formats: ['xlsx'],
+            exportButtons: false
+        });
+
+        //                                        // "id" of selector    // format
+        var exportData = instance.getExportData()['export-table']['xlsx'];
+
+        var XLSbutton = document.getElementById('btn-export-exel');
+
+        XLSbutton.addEventListener('click', function (e) {
+            //                   // data          // mime              // name              // extension
+            console.log(instance);
+            instance.export2file(exportData.data, exportData.mimeType, exportData.filename, exportData.fileExtension);
+        });
+
+        function searchBegin(data) {
+            $("#searchModal").modal("show")
+        }
+    </script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

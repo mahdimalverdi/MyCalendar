@@ -14,7 +14,7 @@
             <a href="/MyCalendar/Week/">@Resource.Today</a>
         </li>
         <li>
-            <a href="/MyCalendar/Week/@persianCalendar.GetYear(new DateTime(ViewBag.Year, ViewBag.Month,ViewBag.Day, persianCalendar).AddDays(7))/@persianCalendar.GetMonth(new DateTime(ViewBag.Year, ViewBag.Month, ViewBag.Day, persianCalendar).AddDays(7))/@persianCalendar.GetDayOfMonth(new DateTime(ViewBag.Year, ViewBag.Month, ViewBag.Day, persianCalendar).AddDays(7)) ">@Resource.NextSymbol</a>
+            <a href="/MyCalendar/Week/@persianCalendar.GetYear(new DateTime(ViewBag.Year, ViewBag.Month, ViewBag.Day, persianCalendar).AddDays(7))/@persianCalendar.GetMonth(new DateTime(ViewBag.Year, ViewBag.Month, ViewBag.Day, persianCalendar).AddDays(7))/@persianCalendar.GetDayOfMonth(new DateTime(ViewBag.Year, ViewBag.Month, ViewBag.Day, persianCalendar).AddDays(7)) ">@Resource.NextSymbol</a>
         </li>
         <li>
             <a href="/MyCalendar/Week/@persianCalendar.GetYear(new DateTime(ViewBag.Year, ViewBag.Month, ViewBag.Day, persianCalendar).AddDays(-7))/@persianCalendar.GetMonth(new DateTime(ViewBag.Year, ViewBag.Month, ViewBag.Day, persianCalendar).AddDays(-7))/@persianCalendar.GetDayOfMonth(new DateTime(ViewBag.Year, ViewBag.Month, ViewBag.Day, persianCalendar).AddDays(-7)) ">@Resource.PreviousSymbol</a>
@@ -28,10 +28,10 @@
             <input type="number" id="Year" min="1300" max="1999">
         </li>
         <li class="">
-            <a class="" href="#"><i class="fas fa-file-pdf"></i></a>
+            <a href="#" class="" onclick="printFunc()"><i class="fas fa-file-pdf"></i></a>
         </li>
         <li class="">
-            <a class="" href="#"><i class="fas fa-file-excel"></i></a>
+            <a id="btn-export-exel" class="" href="#"><i class="fas fa-file-excel"></i></a>
         </li>
     </ul>
 </nav>
@@ -56,7 +56,7 @@
         <div class="week-day-view">
             @Resource.Thursday
         </div>
-        <div class="week-day-view">
+        <div  class="week-day-view">
             @Resource.Friday
         </div>
     </div>
@@ -112,7 +112,7 @@
                     </a>
                 }
                 else
-                {                
+                {
                     <a href="#" class="day-view " data-toggle="modal" data-target="#@(((int)ViewBag.Year).ToString() + ((int)ViewBag.Month < 10 ? "0" : "") + ((int)ViewBag.Month).ToString() + (persianCalendar.GetDayOfMonth(new DateTime(ViewBag.Year, ViewBag.Month, ViewBag.Day, persianCalendar).AddDays(0 - firstDayOfMonthInWeek + j)) < 10 ? "0" : "") + (persianCalendar.GetDayOfMonth(new DateTime(ViewBag.Year, ViewBag.Month, ViewBag.Day, persianCalendar).AddDays(0 - firstDayOfMonthInWeek + j))).ToString())">
                         <div class="date">
                             @persianCalendar.GetDayOfMonth(new DateTime(ViewBag.Year, ViewBag.Month, ViewBag.Day, persianCalendar).AddDays(0 - firstDayOfMonthInWeek + j))
@@ -128,6 +128,68 @@
             }
         </div>
 </div>
+
+<table id="export-table" class="d-none">
+    <thead>
+        <tr>
+            <td colspan="7">
+                @ViewBag.Year @ViewBag.MonthName
+            </td>
+        </tr>
+        <tr class="">
+            <th class="week-day-view">
+                @Resource.Saturday
+            </th>
+            <th class="week-day-view">
+                @Resource.Sunday
+            </th>
+            <th class="week-day-view">
+                @Resource.Monday
+            </th>
+            <th class="week-day-view">
+                @Resource.Tuesday
+            </th>
+            <th class="week-day-view">
+                @Resource.Wednesday
+            </th>
+            <th class="week-day-view">
+                @Resource.Thursday
+            </th>
+            <th class="week-day-view">
+                @Resource.Friday
+            </th>
+        </tr>
+    </thead>
+    <tbody class=" ">
+
+            <tr class=" ">
+                @for (int j = 0; j < 7; j++)
+                {
+                    <td>
+                        @persianCalendar.GetDayOfMonth(new DateTime(ViewBag.Year, ViewBag.Month, ViewBag.Day, persianCalendar).AddDays(0 - firstDayOfMonthInWeek + j))
+                    </td>
+                }
+            </tr>
+            @{bool flag = true; }
+
+            @for (int k = 0; flag; k++)
+            {
+                flag = false;
+                <tr>
+                    @for (int j = 0; j < 7; j++)
+                    {
+                        <td>
+                            @if (Model.Where(e => e.Time.Date == new DateTime(ViewBag.Year, ViewBag.Month, ViewBag.Day, persianCalendar).AddDays(0 - firstDayOfMonthInWeek + j).Date).Count() > k)
+                            {
+                                flag = true;
+                                <span>@Model.Where(e => e.Time.Date == new DateTime(ViewBag.Year, ViewBag.Month, ViewBag.Day, persianCalendar).AddDays(0 - firstDayOfMonthInWeek + j).Date).ElementAt(k).Title</span>
+                            }
+                        </td>
+                    }
+                </tr>
+        }
+    </tbody>
+</table>
 
 @for (int j = 0; j < 7; j++)
 {
@@ -163,6 +225,9 @@
             });
             function refresh() {
                 location.reload();
+            }
+            function printFunc() {
+                window.print();
             }
 </script>
 }
